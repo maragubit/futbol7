@@ -26,4 +26,5 @@ db.sqlite3
 !**/migrations/__init__.py
 
 # Settings
-**/settings.py
+settings.py
+*/settings.py
