@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from core.views import home,clasificacion
 from jugadores.views import JugadorDetailView
-from equipos.views import convocatoria,EquipoDetailView
+from equipos.views import convocatoria,EquipoDetailView,create,store
 from partidos.views import partidos
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,6 +30,8 @@ urlpatterns = [
     path('convocatoria',convocatoria, name="convocatoria"),
     path('partidos',partidos, name="partidos"),
     path("equipo/<int:pk>",EquipoDetailView.as_view(), name="equipo"),
+    path("equipo-express/crear",create, name="equipo-express"),
+    path("equipo-express/guardar",store, name="equipo-express-store"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

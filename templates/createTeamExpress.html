@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">Futbol 7 La granja</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+{% block nav-global %}{% endblock %}
+{%block content%}
+<div><h2>Creación de equipos express</h2></div>
+<br>
+<form method="post" action="{%url 'equipo-express-store'%}">
+    {% csrf_token %}
+    <label for="jugadores">jugadores convocados:</label>
+    <select name="jugadores" id="jugadores" multiple>
+        {% for jugador in jugadores %}
+            <option value="{{ jugador.id }}">{{ jugador.nombre }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit">Crear equipos</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const selectElement = document.getElementById("jugadores");
+        const contador = document.createElement("p");
+        contador.id = "contadorSeleccionados";
+        contador.textContent = "Jugadores seleccionados: 0";
+        selectElement.parentNode.insertBefore(contador, selectElement.nextSibling);
+    
+        selectElement.addEventListener("change", function() {
+            const seleccionados = selectElement.selectedOptions.length;
+            contador.textContent = `Jugadores seleccionados: ${seleccionados}`;
+        });
+    });
+    </script>
+{%endblock%}
