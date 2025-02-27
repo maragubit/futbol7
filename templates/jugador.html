@@ -1,0 +1,54 @@
+{%extends "base.html"%}
+{%load static%}
+{%block contenido%}
+<br>
+<div class="jugador">
+    <div class="row"> <!--  FILA    -->
+        <div class="col-4"> <!--COLUMNA 1-->
+            <img class="foto" src="{%if jugador.imagen%}{{jugador.imagen.url}}{%else%} {%static 'images/jugador.jpg'%}{%endif%}" alt="imagen jugador" style="width:120px"></img>
+            <h3 style="margin-left: 10px;">{{jugador}}</h3>
+            {{jugador.puntos}} Puntos
+        </div>
+        <div class="col-8"><!--COLUMNA 2-->
+            <div class="row">
+                <div class="col-12">
+                    Partidos Jugados {{jugador.partidos_jugados}}
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                P. Ganados:{{jugador.partidos_ganados}}
+                </div>
+                <div class="col-6">
+                P. perdidos:{{jugador.partidos_perdidos}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    T. amarillas:{{jugador.tarjetas_amarillas}}
+                </div>
+                <div class="col-6">
+                    T. rojas:{{jugador.tarjetas_rojas}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    GA:{{jugador.goles_a_favor}}
+                </div>
+                <div class="col-6">
+                    GC:{{jugador.goles_en_contra}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    {{jugador.mvp.count}} MPV
+                </div>
+            </div>
+
+        </div>
+    </div><!--  FILA    -->
+</div>
+<br>
+{%endblock%}

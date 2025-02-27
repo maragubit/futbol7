@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{%load static%}
+{%block contenido%}
+<div class="clasificacion">
+    <h1 style="text-align:center">Clasificación</h1>
+    <br>
+    <table style="width:100%;" id="tabla_jugadores" class="display">
+        <thead>
+        <tr><th>Jugador</th><th>PTOS</th><th>PJ</th><th>PG</th><th>PP</th><th>Ratio</th><th>GA</th><th>GC</th><th>Dif</th><th>MVP</th><th>TA</th><th>TR</th></tr>
+        </thead>
+        <tbody>
+            {%for jugador in jugadores%}
+        <tr><td><a href="{%url 'jugador' jugador.pk%}">{{jugador.nombre}}</a></td> <td>{{jugador.puntos}}</td> <td>{{jugador.partidos_jugados}}</td> <td>{{jugador.partidos_ganados}}</td><td>{{jugador.partidos_perdidos}}</td><td>{{jugador.ratio}}</td> <td>{{jugador.goles_a_favor}}</td> <td>{{jugador.goles_en_contra}}</td> <td>{{jugador.golaverage}}</td><td>{{jugador.mvp.count}}</td><td>{{jugador.tarjetas_amarillas}}</td><td>{{jugador.tarjetas_rojas}}</td></tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+{%endblock%}

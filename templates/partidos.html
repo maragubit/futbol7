@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block contenido%}
+<h3>Partidos</h3>
+<table  id= 'partidos'class="display">
+<thead>
+    <tr><th>local</th> <th></th> <th></th> <th></th><th>visitante</th><th>MPV</th> <th>fecha</th></tr>
+</thead>
+<tbody>
+    {%for partido in partidos%}
+    <tr><td><a href="{% url 'equipo' partido.equipo_local.pk %}">{{partido.equipo_local.color}}</a></td> <td>{{partido.goles_local}}</td> <td>:</td> <td>{{partido.goles_visitante}}</td> <td><a href="{%url 'equipo' partido.equipo_visitante.pk %}">{{partido.equipo_visitante.color}}</a></td> <td>{{partido.mvp.nombre}}</td><td>{{partido.fecha}}</td><tr>
+    {%endfor%}
+</tbody>
+
+</table>
+
+{%endblock%}

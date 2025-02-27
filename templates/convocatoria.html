@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block contenido%}
+<div class="container">
+    <h3>Próximo partido:</h3> 
+    <h4>{{equipo_local}} VS {{equipo_visitante}}</h4>
+    <table>
+        <tr><th>{{equipo_local}}</th><th>Puntos</th></tr>
+        {%for jugador in equipo_local.jugadores.all%}
+        <tr><td>{{jugador.nombre}}</td><td>{{jugador.puntos}}</td></tr>
+        {%endfor%}
+
+    </table>
+    <table>
+        <tr><th>{{equipo_visitante}}</th><th>Puntos</th></tr>
+        {%for jugador in equipo_visitante.jugadores.all%}
+        <tr><td>{{jugador.nombre}}</td><td>{{jugador.puntos}}</td></tr>
+        {%endfor%}
+
+    </table>
+</div>
+{%endblock%}
