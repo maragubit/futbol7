@@ -9,4 +9,5 @@ def home (request):
 
 def clasificacion (request):
    jugadores=Jugador.objects.all()
+   jugadores = sorted(Jugador.objects.all(), key=lambda j: (j.puntos(), j.golaverage()), reverse=True)
    return render (request, "clasificacion.html",{"jugadores":jugadores})

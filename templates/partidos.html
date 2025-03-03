@@ -1,17 +1,38 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block contenido%}
-<h3>Partidos</h3>
-<table  id= 'partidos'class="display">
-<thead>
-    <tr><th>local</th> <th></th> <th></th> <th></th><th>visitante</th><th>MPV</th> <th>fecha</th></tr>
+<h2 class="text-center mb-5">Partidos</h2>
+<table style="width:100%;" id="partidos" class="table table-striped table-dark mb-5">
+    <thead>
+    <tr>
+        <th>local</th>
+        <th>Resultado</th>
+        <th>visitante</th>
+        <th><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><g fill="none"><path fill="#D3883E" d="M10.52 7.521a3.435 3.435 0 0 0-4.213-2.369a2 2 0 0 0-.163.046c-2.493.831-2.691 4.214-.455 5.45l4.97 2.75a.866.866 0 1 0 .838-1.516l-4.97-2.75c-.982-.543-.823-1.956.16-2.288l.005-.002l.07-.018c.899-.25 1.834.27 2.093 1.175a.866.866 0 1 0 1.666-.478m11.939.478a1.7 1.7 0 0 1 2.118-1.168l.045.011l.007.002c.981.332 1.14 1.745.158 2.288l-4.97 2.75a.866.866 0 1 0 .84 1.516l4.97-2.75c2.235-1.236 2.037-4.619-.456-5.45a2 2 0 0 0-.164-.046a3.435 3.435 0 0 0-4.213 2.37a.866.866 0 1 0 1.666.477m-5.133 9.511v-4.22h-3.34v4.22c0 .74-.33 1.45-.9 1.92l-1.92 1.6h8.98l-1.92-1.6a2.51 2.51 0 0 1-.9-1.92"/><path fill="#FFB02E" d="M15.658 16.54a6.97 6.97 0 0 1-6.97-6.97V2.71c0-.39.32-.71.71-.71h12.53c.39 0 .71.32.71.71v6.86c0 3.85-3.12 6.97-6.98 6.97"/><path fill="#6D4534" d="M22.792 21.03H8.197c-.77 0-1.423.51-1.571 1.22l-1.614 7.09c-.073.33.19.64.549.64h19.878c.359 0 .622-.31.549-.64l-1.614-7.09c-.158-.71-.812-1.22-1.582-1.22"/><path fill="#FFB02E" d="M18.383 23.96h-5.766a.625.625 0 0 0-.613.64v1.81c0 .35.268.64.613.64h5.766c.335 0 .613-.28.613-.64V24.6c0-.35-.268-.64-.613-.64"/></g></svg> MPV</th>
+        <th>fecha</th>
+    </tr>
 </thead>
 <tbody>
     {%for partido in partidos%}
-    <tr><td><a href="{% url 'equipo' partido.equipo_local.pk %}">{{partido.equipo_local.color}}</a></td> <td>{{partido.goles_local}}</td> <td>:</td> <td>{{partido.goles_visitante}}</td> <td><a href="{%url 'equipo' partido.equipo_visitante.pk %}">{{partido.equipo_visitante.color}}</a></td> <td>{{partido.mvp.nombre}}</td><td>{{partido.fecha}}</td><tr>
+    <tr>
+        <td><a href="{% url 'equipo' partido.equipo_local.pk %}">{%if partido.equipo_local.color == "Blanco"%}<svg xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 640 512"><path fill="#ffffff" d="M631.2 96.5L436.5 0C416.4 27.8 371.9 47.2 320 47.2S223.6 27.8 203.5 0L8.8 96.5c-7.9 4-11.1 13.6-7.2 21.5l57.2 114.5c4 7.9 13.6 11.1 21.5 7.2l56.6-27.7c10.6-5.2 23 2.5 23 14.4V480c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V226.3c0-11.8 12.4-19.6 23-14.4l56.6 27.7c7.9 4 17.5.8 21.5-7.2L638.3 118c4-7.9.8-17.6-7.1-21.5"/></svg>{%else%}<svg xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 640 512"><path fill="#dc2626" d="M631.2 96.5L436.5 0C416.4 27.8 371.9 47.2 320 47.2S223.6 27.8 203.5 0L8.8 96.5c-7.9 4-11.1 13.6-7.2 21.5l57.2 114.5c4 7.9 13.6 11.1 21.5 7.2l56.6-27.7c10.6-5.2 23 2.5 23 14.4V480c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V226.3c0-11.8 12.4-19.6 23-14.4l56.6 27.7c7.9 4 17.5.8 21.5-7.2L638.3 118c4-7.9.8-17.6-7.1-21.5"/></svg> {%endif%}  {{partido.equipo_local.color}}</a></td>
+        <td>{{partido.goles_local}} : {{partido.goles_visitante}}</td>
+        <td><a href="{%url 'equipo' partido.equipo_visitante.pk %}"> {%if partido.equipo_visitante.color == "Blanco"%}<svg xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 640 512"><path fill="#ffffff" d="M631.2 96.5L436.5 0C416.4 27.8 371.9 47.2 320 47.2S223.6 27.8 203.5 0L8.8 96.5c-7.9 4-11.1 13.6-7.2 21.5l57.2 114.5c4 7.9 13.6 11.1 21.5 7.2l56.6-27.7c10.6-5.2 23 2.5 23 14.4V480c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V226.3c0-11.8 12.4-19.6 23-14.4l56.6 27.7c7.9 4 17.5.8 21.5-7.2L638.3 118c4-7.9.8-17.6-7.1-21.5"/></svg>{%else%}<svg xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 640 512"><path fill="#dc2626" d="M631.2 96.5L436.5 0C416.4 27.8 371.9 47.2 320 47.2S223.6 27.8 203.5 0L8.8 96.5c-7.9 4-11.1 13.6-7.2 21.5l57.2 114.5c4 7.9 13.6 11.1 21.5 7.2l56.6-27.7c10.6-5.2 23 2.5 23 14.4V480c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V226.3c0-11.8 12.4-19.6 23-14.4l56.6 27.7c7.9 4 17.5.8 21.5-7.2L638.3 118c4-7.9.8-17.6-7.1-21.5"/></svg> {%endif%}{{partido.equipo_visitante.color}}</a></td>
+        <td><a href="{%url 'jugador' partido.mvp.pk%}">{{partido.mvp.nombre}}</a></td>
+        <td>{{partido.fecha}}</td>
+    <tr>
     {%endfor%}
 </tbody>
 
 </table>
-
+<style>
+    table.dataTable tbody tr {
+        background-color: #495057;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+        background-color: transparent;
+    }
+</style>
 {%endblock%}
