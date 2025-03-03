@@ -15,13 +15,15 @@
 <form method="post" action="{%url 'equipo-express-store'%}">
     {% csrf_token %}
     <label for="jugadores">jugadores convocados:</label>
-    <select name="jugadores" id="jugadores" multiple>
+    <select name="jugadores" id="jugadores" multiple style="margin-bottom: 20px;">
         {% for jugador in jugadores %}
             <option value="{{ jugador.id }}">{{ jugador.nombre }}</option>
         {% endfor %}
     </select>
-    <br>
-    <button type="submit">Crear equipos</button>
+    <div class="submit-row" style="margin-top:35px;">
+        <input type="submit" value="Crear equipo express" class="default" name="_save">
+    </div>
+       
 </form>
 
 <script>

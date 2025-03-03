@@ -66,7 +66,7 @@ class Jugador(models.Model):
         ratio=0
         if self.partidos_jugados() == 0:
             return ratio  # Para evitar división por cero
-        return self.puntos()/self.partidos_jugados()
+        return round(self.puntos()/self.partidos_jugados(),2)
     
     def partidos_ganados(self):
         partidos_ganados=0
