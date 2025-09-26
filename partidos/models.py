@@ -19,5 +19,13 @@ class Partido(models.Model):
 
     def __str__(self):
         return ("Partido del: {}".format(self.fecha))
+    
+class Temporada(models.Model):
+    nombre=models.CharField(max_length=100)
+    inicio=models.DateField()
+    fin=models.DateField()
+
+    def __str__(self):
+        return ("Temporada: {}".format(self.nombre))
 
     
