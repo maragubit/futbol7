@@ -25,6 +25,3 @@ db.sqlite3
 **/migrations/*.py
 !**/migrations/__init__.py
 
-# Settings
-settings.py
-*/settings.py
