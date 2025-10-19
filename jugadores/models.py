@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.cache import cache
+from .decorators import temporada_default
 
 
 
@@ -18,7 +19,8 @@ class Jugador(models.Model):
             if amonestado:
                  return ('{} SANCIONADO').format(self.nombre)
             return ('{}').format(self.nombre)
-    
+        
+    @temporada_default
     def goles_a_favor(self,temporada_id):
         cache_key = f"jugador:{self.pk}:goles_a_favor:{temporada_id}"
         cached = cache.get(cache_key)
@@ -27,6 +29,7 @@ class Jugador(models.Model):
         
         from partidos.models import Temporada
         goles=0
+        
         temporada=Temporada.objects.get(id=temporada_id)
         for equipo in self.equipos.all():
             partidos_local=equipo.partidos_local.filter(fecha__gte=temporada.inicio, fecha__lt=temporada.fin)
@@ -38,7 +41,7 @@ class Jugador(models.Model):
         cache.set(cache_key, goles, timeout=None)
         return goles
     
-    
+    @temporada_default
     def goles_en_contra(self,temporada_id):
 
         cache_key = f"jugador:{self.pk}:goles_en_contra:{temporada_id}"
@@ -57,7 +60,7 @@ class Jugador(models.Model):
                     goles+=partido.goles_local
         cache.set(cache_key, goles, timeout=None)
         return goles
-    
+    @temporada_default
     def golaverage(self,temporada_id):
         cache_key = f"jugador:{self.pk}:golaverage:{temporada_id}"
         cached = cache.get(cache_key)
@@ -67,6 +70,7 @@ class Jugador(models.Model):
         cache.set(cache_key, golaverage, timeout=None)
         return golaverage
 
+    @temporada_default
     def puntos(self,temporada_id):
         
         cache_key=f"jugador:{self.pk}:puntos:{temporada_id}"
@@ -92,7 +96,7 @@ class Jugador(models.Model):
                      puntos+=1
         cache.set(cache_key, puntos, timeout=None)
         return puntos
-    
+    @temporada_default
     def partidos_jugados(self,temporada_id):
         
         cache_key=f"jugador:{self.pk}:partidos_jugados:{temporada_id}"
@@ -104,7 +108,7 @@ class Jugador(models.Model):
         partidos_jugados=self.equipos.filter(fecha__gte=temporada.inicio, fecha__lt=temporada.fin).count()
         cache.set(cache_key, partidos_jugados, timeout=None)
         return partidos_jugados
-    
+    @temporada_default
     def ratio(self,temporada_id):
         cache_key=f"jugador:{self.pk}:ratio:{temporada_id}"
         cached = cache.get(cache_key)
@@ -120,7 +124,7 @@ class Jugador(models.Model):
             ratio = round(self.puntos(temporada.id)/self.partidos_jugados(temporada.id),2)
         cache.set(cache_key, ratio, timeout=None)
         return ratio
-
+    @temporada_default
     def partidos_ganados(self,temporada_id):
         cache_key=f"jugador:{self.pk}:partidos_ganados:{temporada_id}"
         cached = cache.get(cache_key)
@@ -140,7 +144,7 @@ class Jugador(models.Model):
                      partidos_ganados+=1
         cache.set(cache_key, partidos_ganados, timeout=None)
         return partidos_ganados
-    
+    @temporada_default
     def partidos_perdidos(self,temporada_id):
         cache_key=f"jugador:{self.pk}:partidos_perdidos:{temporada_id}"
         cached = cache.get(cache_key)
@@ -160,7 +164,7 @@ class Jugador(models.Model):
                      partidos_perdidos+=1
         cache.set(cache_key, partidos_perdidos, timeout=None)
         return partidos_perdidos
-    
+    @temporada_default
     def sancionado(self):
 
         cache_key=f"jugador:{self.pk}:sancionado"
@@ -176,7 +180,7 @@ class Jugador(models.Model):
         else:
             cache.set(cache_key, "NO", timeout=None)
             return "NO"
-
+    @temporada_default
     def tarjetas_amarillas(self,temporada_id):
         cache_key=f"jugador:{self.pk}:tarjetas_amarillas:{temporada_id}"
         cached = cache.get(cache_key)
@@ -186,7 +190,7 @@ class Jugador(models.Model):
         temporada=Temporada.objects.get(id=temporada_id)
         cache.set(cache_key, self.amonestaciones.filter(tarjeta='amarilla', fecha__range=(temporada.inicio,temporada.fin)).count(), timeout=None)
         return self.amonestaciones.filter(tarjeta='amarilla', fecha__range=(temporada.inicio,temporada.fin)).count()
-    
+    @temporada_default
     def tarjetas_rojas(self,temporada_id):
         cache_key=f"jugador:{self.pk}:tarjetas_rojas:{temporada_id}"
         cached = cache.get(cache_key)
