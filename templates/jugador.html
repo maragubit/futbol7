@@ -1,49 +1,62 @@
 {%extends "base.html"%}
 {%load static%}
+{% load jugadores_methods %}
 {%block contenido%}
 <br>
-<div class="jugador">
+<div class="d-flex mx-auto justify-content-center mb-4">
+<form method="GET" action="{%url 'jugador' jugador.pk%}" >
+    <select class="d-inline" name="temporada" onchange="this.form.submit();">
+
+        {% for t in temporadas %}
+        <option value="{{ t.id }}" {% if t.id == temporada.id %}selected{% endif %}>{{ t.nombre }}</option>
+        {% endfor %}
+        
+    </select>
+
+</form>
+</div>
+<div class="jugador justify-content-center mx-auto">
     <div class="row"> <!--  FILA    -->
         <div class="col-4"> <!--COLUMNA 1-->
             <img class="foto" src="{%if jugador.imagen%}{{jugador.imagen.url}}{%else%} {%static 'images/jugador.jpg'%}{%endif%}" alt="imagen jugador" style="width:120px"></img>
             <h3 style="margin-left: 10px;">{{jugador}}</h3>
-            {{jugador.puntos}} Puntos
+            {{jugador|puntos:temporada.id}} Puntos
         </div>
         <div class="col-8"><!--COLUMNA 2-->
             <div class="row">
-                <div class="col-12">
-                    Partidos Jugados {{jugador.partidos_jugados}}
+                <div class="col-12-xs ">
+                    Partidos Jugados {{jugador|partidos_jugados:temporada.id}}
                     <hr>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                P. Ganados:{{jugador.partidos_ganados}}
+                P. Ganados:{{jugador|partidos_ganados:temporada.id}}
                 </div>
                 <div class="col-6">
-                P. perdidos:{{jugador.partidos_perdidos}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    T. amarillas:{{jugador.tarjetas_amarillas}}
-                </div>
-                <div class="col-6">
-                    T. rojas:{{jugador.tarjetas_rojas}}
+                P. perdidos:{{jugador|partidos_perdidos:temporada.id}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    GA:{{jugador.goles_a_favor}}
+                    T. amarillas:{{jugador|tarjetas_amarillas:temporada.id}}
                 </div>
                 <div class="col-6">
-                    GC:{{jugador.goles_en_contra}}
+                    T. rojas:{{jugador|tarjetas_rojas:temporada.id}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    GA:{{jugador|goles_a_favor:temporada.id}}
+                </div>
+                <div class="col-6">
+                    GC:{{jugador|goles_en_contra:temporada.id}}
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-12">
-                    {{jugador.mvp.count}} MPV
+                    {{jugador|mvp_count:temporada.id}} MPV
                 </div>
             </div>
 

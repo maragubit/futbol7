@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core.views import home,clasificacion
-from jugadores.views import JugadorDetailView
+from jugadores.views import jugador_detail
 from equipos.views import convocatoria,EquipoDetailView,create,store
 from partidos.views import partidos
 from django.conf import settings
@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('clasificacion', clasificacion, name="clasificacion"),
-    path("jugador/<int:pk>",JugadorDetailView.as_view(), name="jugador"),
+    path("jugador/<int:pk>",jugador_detail, name="jugador"),
     path('convocatoria',convocatoria, name="convocatoria"),
     path('partidos',partidos, name="partidos"),
     path("equipo/<int:pk>",EquipoDetailView.as_view(), name="equipo"),
