@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from partidos.models import Temporada
 from .models import Equipo
 from .models import Jugador
 from django.views.generic.detail import DetailView
@@ -6,9 +8,11 @@ from django.shortcuts import redirect
 # Create your views here.
 def convocatoria(request):
     equipos=Equipo.objects.all().order_by("-fecha")[:2]
+    temporadas=Temporada.objects.all()
+    temporada=Temporada.objects.last()
     equipo_local=equipos[0]
     equipo_visitante=equipos[1]
-    return render (request,'convocatoria.html',{'equipo_local':equipo_local,'equipo_visitante':equipo_visitante})
+    return render (request,'convocatoria.html',{'equipo_local':equipo_local,'equipo_visitante':equipo_visitante,'temporadas':temporadas,'temporada':temporada})
 
 def create (request):
     jugadores=Jugador.objects.all()
@@ -17,8 +21,9 @@ def create (request):
 def store(request):
     if request.method == "POST":
         jugadores_ids = request.POST.getlist('jugadores')  # Obtener lista de IDs seleccionados
+        temporada=Temporada.objects.last()
         jugadores = list(Jugador.objects.filter(id__in=jugadores_ids))
-        jugadores = sorted(jugadores, key=lambda j: j.puntos(), reverse=True)
+        jugadores = sorted(jugadores, key=lambda j: j.puntos(temporada.id), reverse=True)
         for jugador in jugadores:
             print(jugador)
         if len(jugadores) < 2:
@@ -44,7 +49,6 @@ def store(request):
 
         
 
-    return redirect(request, "admin")
 
 # Create your views here.
 
@@ -52,3 +56,11 @@ class EquipoDetailView(DetailView):
 
     model = Equipo
     template_name="equipo.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        temporadas=Temporada.objects.all()
+        context['temporadas'] = temporadas
+        temporada = Temporada.objects.all().last()
+        context['temporada'] = temporada
+        return context

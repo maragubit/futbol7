@@ -1,5 +1,6 @@
 {%extends "base.html"%}
 {%load static%}
+{% load jugadores_methods %}
 {%block contenido%}
 
 <br>
@@ -24,7 +25,7 @@
         </tr>        </thead>
         <tbody>
             {%for jugador in equipo.jugadores.all%}
-        <tr><td>{{forloop.counter}}</td><td><a href="{%url 'jugador' jugador.pk%}">{{jugador.nombre}}</a></td> <td>{{jugador.puntos}}</td> <td>{{jugador.partidos_jugados}}</td> <td>{{jugador.partidos_ganados}}</td><td>{{jugador.partidos_perdidos}}</td><td>{{jugador.ratio}}</td> <td>{{jugador.goles_a_favor}}</td> <td>{{jugador.goles_en_contra}}</td> <td>{{jugador.golaverage}}</td><td>{{jugador.mvp.count}}</td><td>{{jugador.tarjetas_amarillas}}</td><td>{{jugador.tarjetas_rojas}}</td></tr>
+        <tr><td>{{forloop.counter}}</td><td><a href="{%url 'jugador' jugador.pk%}">{{jugador.nombre}}</a></td> <td>{{jugador|puntos:temporada.id}}</td> <td>{{jugador|partidos_jugados:temporada.id}}</td> <td>{{jugador|partidos_ganados:temporada.id}}</td><td>{{jugador|partidos_perdidos:temporada.id}}</td><td>{{jugador|ratio:temporada.id}}</td> <td>{{jugador|goles_a_favor:temporada.id}}</td> <td>{{jugador|goles_en_contra:temporada.id}}</td> <td>{{jugador|golaverage:temporada.id}}</td><td>{{jugador|mvp_count:temporada.id}}</td><td>{{jugador|tarjetas_amarillas:temporada.id}}</td><td>{{jugador|tarjetas_rojas:temporada.id}}</td></tr>
             {%endfor%}
         </tbody>
     </table>
